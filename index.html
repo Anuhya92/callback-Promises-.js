@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promises</title>
+    <script src="./promises.js"></script>
+    <script>
+      function getAdviceOrJoke() {
+        flipCoin().then((response) => {
+          document.getElementById("coinResponse").innerText = response.data;
+          document.getElementById("response").innerText = response.message;
+        });
+      }
+    </script>
+    <style>
+      #response {
+        font-style: italic;
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="getAdviceOrJoke()">Advice or Joke</button>
+    <div id="coinResponse"></div>
+    <div id="response"></div>
+  </body>
+</html>
