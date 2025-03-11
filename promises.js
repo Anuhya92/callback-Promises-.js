@@ -1,35 +1,31 @@
 function flipCoin() {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const outcome = Math.random() > 0.5 ? "heads" : "tails";
     if (outcome === "heads") {
-      return fetchAdvice().then((response) => {
-        const advice = response.slip.advice;
-        resolve({
-          data: advice,
-          message: "You spun heads and here is a piece of advice :)",
-        });
+      const response = await fetchAdvice();
+      const advice = response.slip.advice;
+      resolve({
+        data: advice,
+        message: "You spun heads and here is a piece of advice :)",
       });
     } else {
-      return fetchJoke().then((response) => {
-        debugger;
-        const joke = response.setup + " " + response.punchline;
-        resolve({
-          data: joke,
-          message: "You spun tails and here is a joke :)",
-        });
+      const response = await fetchJoke();
+      const joke = response.setup + " " + response.punchline;
+      resolve({
+        data: joke,
+        message: "You spun tails and here is a joke :)",
       });
     }
   });
 }
-
-function fetchJoke() {
-  return fetch("https://official-joke-api.appspot.com/random_joke").then(
-    (response) => response.json()
+const fetchJoke = async () => {
+  const response = await fetch(
+    "https://official-joke-api.appspot.com/random_joke"
   );
-}
+  return response.json();
+};
 
-function fetchAdvice() {
-  return fetch("http://api.adviceslip.com/advice").then((response) =>
-    response.json()
-  );
-}
+const fetchAdvice = async () => {
+  const response = await fetch("http://api.adviceslip.com/advice");
+  return response.json();
+};
